@@ -217,6 +217,9 @@ Args:
 { # CreateNodePoolRequest creates a node pool for a cluster.
   &quot;clusterId&quot;: &quot;A String&quot;, # Required. Deprecated. The name of the cluster. This field has been deprecated and replaced by the parent field.
   &quot;nodePool&quot;: { # NodePool contains the name and configuration for a cluster&#x27;s node pool. Node pools are a set of nodes (i.e. VM&#x27;s), with a common configuration and specification, under the control of the cluster master. They may have a set of Kubernetes labels applied to them, which may be used to reference them during pod scheduling. They may also be resized up or down, to accommodate the workload. # Required. The node pool to create.
+    &quot;autopilotConfig&quot;: { # AutopilotConfig contains configuration of autopilot feature for this nodepool. # Specifies the autopilot configuration for this node pool. This field is exclusively reserved for Cluster Autoscaler to implement go/gke-managed-nodes-ccc-api
+      &quot;enabled&quot;: True or False, # Denotes that nodes belonging to this node pool are Autopilot nodes.
+    },
     &quot;autoscaling&quot;: { # NodePoolAutoscaling contains information required by cluster autoscaler to adjust the size of the node pool to the current cluster usage. # Autoscaler configuration for this NodePool. Autoscaler is enabled only if a valid configuration is present.
       &quot;autoprovisioned&quot;: True or False, # Can this node pool be deleted automatically.
       &quot;enabled&quot;: True or False, # Is autoscaling enabled for this node pool.
@@ -265,7 +268,7 @@ Args:
         &quot;privateRegistryAccessConfig&quot;: { # PrivateRegistryAccessConfig contains access configuration for private container registries. # PrivateRegistryAccessConfig is used to configure access configuration for private container registries.
           &quot;certificateAuthorityDomainConfig&quot;: [ # Private registry access configuration.
             { # CertificateAuthorityDomainConfig configures one or more fully qualified domain names (FQDN) to a specific certificate.
-              &quot;fqdns&quot;: [ # List of fully qualified domain names (FQDN). Specifying port is supported. Wilcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
+              &quot;fqdns&quot;: [ # List of fully qualified domain names (FQDN). Specifying port is supported. Wildcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
                 &quot;A String&quot;,
               ],
               &quot;gcpSecretManagerCertificateConfig&quot;: { # GCPSecretManagerCertificateConfig configures a secret from [Google Secret Manager](https://cloud.google.com/secret-manager). # Google Secret Manager (GCP) certificate configuration.
@@ -337,7 +340,7 @@ Args:
         &quot;localSsdCount&quot;: 42, # Number of local NVMe SSDs to use. The limit for this value is dependent upon the maximum number of disk available on a machine per zone. See: https://cloud.google.com/compute/docs/disks/local-ssd for more information. A zero (or unset) value has different meanings depending on machine type being used: 1. For pre-Gen3 machines, which support flexible numbers of local ssds, zero (or unset) means to disable using local SSDs as ephemeral storage. 2. For Gen3 machines which dictate a specific number of local ssds, zero (or unset) means to use the default number of local ssds that goes with that machine type. For example, for a c3-standard-8-lssd machine, 2 local ssds would be provisioned. For c3-standard-8 (which doesn&#x27;t support local ssds), 0 will be provisioned. See https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds for more info.
       },
       &quot;localSsdCount&quot;: 42, # The number of local SSD disks to be attached to the node. The limit for this value is dependent upon the maximum number of disks available on a machine per zone. See: https://cloud.google.com/compute/docs/disks/local-ssd for more information.
-      &quot;localSsdEncryptionMode&quot;: &quot;A String&quot;, # Specifies which method should be used for encrypting the Local SSDs attahced to the node.
+      &quot;localSsdEncryptionMode&quot;: &quot;A String&quot;, # Specifies which method should be used for encrypting the Local SSDs attached to the node.
       &quot;loggingConfig&quot;: { # NodePoolLoggingConfig specifies logging configuration for nodepools. # Logging configuration.
         &quot;variantConfig&quot;: { # LoggingVariantConfig specifies the behaviour of the logging component. # Logging variant configuration.
           &quot;variant&quot;: &quot;A String&quot;, # Logging variant deployed on nodes.
@@ -705,6 +708,9 @@ Returns:
   An object of the form:
 
     { # NodePool contains the name and configuration for a cluster&#x27;s node pool. Node pools are a set of nodes (i.e. VM&#x27;s), with a common configuration and specification, under the control of the cluster master. They may have a set of Kubernetes labels applied to them, which may be used to reference them during pod scheduling. They may also be resized up or down, to accommodate the workload.
+  &quot;autopilotConfig&quot;: { # AutopilotConfig contains configuration of autopilot feature for this nodepool. # Specifies the autopilot configuration for this node pool. This field is exclusively reserved for Cluster Autoscaler to implement go/gke-managed-nodes-ccc-api
+    &quot;enabled&quot;: True or False, # Denotes that nodes belonging to this node pool are Autopilot nodes.
+  },
   &quot;autoscaling&quot;: { # NodePoolAutoscaling contains information required by cluster autoscaler to adjust the size of the node pool to the current cluster usage. # Autoscaler configuration for this NodePool. Autoscaler is enabled only if a valid configuration is present.
     &quot;autoprovisioned&quot;: True or False, # Can this node pool be deleted automatically.
     &quot;enabled&quot;: True or False, # Is autoscaling enabled for this node pool.
@@ -753,7 +759,7 @@ Returns:
       &quot;privateRegistryAccessConfig&quot;: { # PrivateRegistryAccessConfig contains access configuration for private container registries. # PrivateRegistryAccessConfig is used to configure access configuration for private container registries.
         &quot;certificateAuthorityDomainConfig&quot;: [ # Private registry access configuration.
           { # CertificateAuthorityDomainConfig configures one or more fully qualified domain names (FQDN) to a specific certificate.
-            &quot;fqdns&quot;: [ # List of fully qualified domain names (FQDN). Specifying port is supported. Wilcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
+            &quot;fqdns&quot;: [ # List of fully qualified domain names (FQDN). Specifying port is supported. Wildcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
               &quot;A String&quot;,
             ],
             &quot;gcpSecretManagerCertificateConfig&quot;: { # GCPSecretManagerCertificateConfig configures a secret from [Google Secret Manager](https://cloud.google.com/secret-manager). # Google Secret Manager (GCP) certificate configuration.
@@ -825,7 +831,7 @@ Returns:
       &quot;localSsdCount&quot;: 42, # Number of local NVMe SSDs to use. The limit for this value is dependent upon the maximum number of disk available on a machine per zone. See: https://cloud.google.com/compute/docs/disks/local-ssd for more information. A zero (or unset) value has different meanings depending on machine type being used: 1. For pre-Gen3 machines, which support flexible numbers of local ssds, zero (or unset) means to disable using local SSDs as ephemeral storage. 2. For Gen3 machines which dictate a specific number of local ssds, zero (or unset) means to use the default number of local ssds that goes with that machine type. For example, for a c3-standard-8-lssd machine, 2 local ssds would be provisioned. For c3-standard-8 (which doesn&#x27;t support local ssds), 0 will be provisioned. See https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds for more info.
     },
     &quot;localSsdCount&quot;: 42, # The number of local SSD disks to be attached to the node. The limit for this value is dependent upon the maximum number of disks available on a machine per zone. See: https://cloud.google.com/compute/docs/disks/local-ssd for more information.
-    &quot;localSsdEncryptionMode&quot;: &quot;A String&quot;, # Specifies which method should be used for encrypting the Local SSDs attahced to the node.
+    &quot;localSsdEncryptionMode&quot;: &quot;A String&quot;, # Specifies which method should be used for encrypting the Local SSDs attached to the node.
     &quot;loggingConfig&quot;: { # NodePoolLoggingConfig specifies logging configuration for nodepools. # Logging configuration.
       &quot;variantConfig&quot;: { # LoggingVariantConfig specifies the behaviour of the logging component. # Logging variant configuration.
         &quot;variant&quot;: &quot;A String&quot;, # Logging variant deployed on nodes.
@@ -1021,6 +1027,9 @@ Returns:
     { # ListNodePoolsResponse is the result of ListNodePoolsRequest.
   &quot;nodePools&quot;: [ # A list of node pools for a cluster.
     { # NodePool contains the name and configuration for a cluster&#x27;s node pool. Node pools are a set of nodes (i.e. VM&#x27;s), with a common configuration and specification, under the control of the cluster master. They may have a set of Kubernetes labels applied to them, which may be used to reference them during pod scheduling. They may also be resized up or down, to accommodate the workload.
+      &quot;autopilotConfig&quot;: { # AutopilotConfig contains configuration of autopilot feature for this nodepool. # Specifies the autopilot configuration for this node pool. This field is exclusively reserved for Cluster Autoscaler to implement go/gke-managed-nodes-ccc-api
+        &quot;enabled&quot;: True or False, # Denotes that nodes belonging to this node pool are Autopilot nodes.
+      },
       &quot;autoscaling&quot;: { # NodePoolAutoscaling contains information required by cluster autoscaler to adjust the size of the node pool to the current cluster usage. # Autoscaler configuration for this NodePool. Autoscaler is enabled only if a valid configuration is present.
         &quot;autoprovisioned&quot;: True or False, # Can this node pool be deleted automatically.
         &quot;enabled&quot;: True or False, # Is autoscaling enabled for this node pool.
@@ -1069,7 +1078,7 @@ Returns:
           &quot;privateRegistryAccessConfig&quot;: { # PrivateRegistryAccessConfig contains access configuration for private container registries. # PrivateRegistryAccessConfig is used to configure access configuration for private container registries.
             &quot;certificateAuthorityDomainConfig&quot;: [ # Private registry access configuration.
               { # CertificateAuthorityDomainConfig configures one or more fully qualified domain names (FQDN) to a specific certificate.
-                &quot;fqdns&quot;: [ # List of fully qualified domain names (FQDN). Specifying port is supported. Wilcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
+                &quot;fqdns&quot;: [ # List of fully qualified domain names (FQDN). Specifying port is supported. Wildcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
                   &quot;A String&quot;,
                 ],
                 &quot;gcpSecretManagerCertificateConfig&quot;: { # GCPSecretManagerCertificateConfig configures a secret from [Google Secret Manager](https://cloud.google.com/secret-manager). # Google Secret Manager (GCP) certificate configuration.
@@ -1141,7 +1150,7 @@ Returns:
           &quot;localSsdCount&quot;: 42, # Number of local NVMe SSDs to use. The limit for this value is dependent upon the maximum number of disk available on a machine per zone. See: https://cloud.google.com/compute/docs/disks/local-ssd for more information. A zero (or unset) value has different meanings depending on machine type being used: 1. For pre-Gen3 machines, which support flexible numbers of local ssds, zero (or unset) means to disable using local SSDs as ephemeral storage. 2. For Gen3 machines which dictate a specific number of local ssds, zero (or unset) means to use the default number of local ssds that goes with that machine type. For example, for a c3-standard-8-lssd machine, 2 local ssds would be provisioned. For c3-standard-8 (which doesn&#x27;t support local ssds), 0 will be provisioned. See https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds for more info.
         },
         &quot;localSsdCount&quot;: 42, # The number of local SSD disks to be attached to the node. The limit for this value is dependent upon the maximum number of disks available on a machine per zone. See: https://cloud.google.com/compute/docs/disks/local-ssd for more information.
-        &quot;localSsdEncryptionMode&quot;: &quot;A String&quot;, # Specifies which method should be used for encrypting the Local SSDs attahced to the node.
+        &quot;localSsdEncryptionMode&quot;: &quot;A String&quot;, # Specifies which method should be used for encrypting the Local SSDs attached to the node.
         &quot;loggingConfig&quot;: { # NodePoolLoggingConfig specifies logging configuration for nodepools. # Logging configuration.
           &quot;variantConfig&quot;: { # LoggingVariantConfig specifies the behaviour of the logging component. # Logging variant configuration.
             &quot;variant&quot;: &quot;A String&quot;, # Logging variant deployed on nodes.
@@ -1608,7 +1617,7 @@ Args:
     &quot;privateRegistryAccessConfig&quot;: { # PrivateRegistryAccessConfig contains access configuration for private container registries. # PrivateRegistryAccessConfig is used to configure access configuration for private container registries.
       &quot;certificateAuthorityDomainConfig&quot;: [ # Private registry access configuration.
         { # CertificateAuthorityDomainConfig configures one or more fully qualified domain names (FQDN) to a specific certificate.
-          &quot;fqdns&quot;: [ # List of fully qualified domain names (FQDN). Specifying port is supported. Wilcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
+          &quot;fqdns&quot;: [ # List of fully qualified domain names (FQDN). Specifying port is supported. Wildcards are NOT supported. Examples: - my.customdomain.com - 10.0.1.2:5000
             &quot;A String&quot;,
           ],
           &quot;gcpSecretManagerCertificateConfig&quot;: { # GCPSecretManagerCertificateConfig configures a secret from [Google Secret Manager](https://cloud.google.com/secret-manager). # Google Secret Manager (GCP) certificate configuration.

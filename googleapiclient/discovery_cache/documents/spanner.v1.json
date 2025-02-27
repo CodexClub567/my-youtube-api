@@ -3348,7 +3348,7 @@
 }
 }
 },
-"revision": "20250123",
+"revision": "20250218",
 "rootUrl": "https://spanner.googleapis.com/",
 "schemas": {
 "AddSplitPointsRequest": {
@@ -3356,7 +3356,7 @@
 "id": "AddSplitPointsRequest",
 "properties": {
 "initiator": {
-"description": "Optional. A user-supplied tag associated with the split points. For example, \"intital_data_load\", \"special_event_1\". Defaults to \"CloudAddSplitPointsAPI\" if not specified. The length of the tag must not exceed 50 characters,else will be trimmed. Only valid UTF8 characters are allowed.",
+"description": "Optional. A user-supplied tag associated with the split points. For example, \"initial_data_load\", \"special_event_1\". Defaults to \"CloudAddSplitPointsAPI\" if not specified. The length of the tag must not exceed 50 characters,else will be trimmed. Only valid UTF8 characters are allowed.",
 "type": "string"
 },
 "splitPoints": {
@@ -3544,6 +3544,14 @@
 "readOnly": true,
 "type": "string"
 },
+"instancePartitions": {
+"description": "Output only. The instance partition(s) storing the backup. This is the same as the list of the instance partition(s) that the database had footprint in at the backup's `version_time`.",
+"items": {
+"$ref": "BackupInstancePartition"
+},
+"readOnly": true,
+"type": "array"
+},
 "maxExpireTime": {
 "description": "Output only. The max allowed expiration time of the backup, with microseconds granularity. A backup's expiration time can be configured in multiple APIs: CreateBackup, UpdateBackup, CopyBackup. When updating or copying an existing backup, the expiration time specified must be less than `Backup.max_expire_time`.",
 "format": "google-datetime",
@@ -3630,13 +3638,24 @@
 },
 "type": "object"
 },
+"BackupInstancePartition": {
+"description": "Instance partition information for the backup.",
+"id": "BackupInstancePartition",
+"properties": {
+"instancePartition": {
+"description": "A unique identifier for the instance partition. Values are of the form `projects//instances//instancePartitions/`",
+"type": "string"
+}
+},
+"type": "object"
+},
 "BackupSchedule": {
 "description": "BackupSchedule expresses the automated backup creation specification for a Spanner database.",
 "id": "BackupSchedule",
 "properties": {
 "encryptionConfig": {
 "$ref": "CreateBackupEncryptionConfig",
-"description": "Optional. The encryption configuration that will be used to encrypt the backup. If this field is not specified, the backup will use the same encryption configuration as the database."
+"description": "Optional. The encryption configuration that is used to encrypt the backup. If this field is not specified, the backup uses the same encryption configuration as the database."
 },
 "fullBackupSpec": {
 "$ref": "FullBackupSpec",
@@ -4305,21 +4324,21 @@
 "type": "object"
 },
 "CrontabSpec": {
-"description": "CrontabSpec can be used to specify the version time and frequency at which the backup should be created.",
+"description": "CrontabSpec can be used to specify the version time and frequency at which the backup is created.",
 "id": "CrontabSpec",
 "properties": {
 "creationWindow": {
-"description": "Output only. Schedule backups will contain an externally consistent copy of the database at the version time specified in `schedule_spec.cron_spec`. However, Spanner may not initiate the creation of the scheduled backups at that version time. Spanner will initiate the creation of scheduled backups within the time window bounded by the version_time specified in `schedule_spec.cron_spec` and version_time + `creation_window`.",
+"description": "Output only. Scheduled backups contain an externally consistent copy of the database at the version time specified in `schedule_spec.cron_spec`. However, Spanner might not initiate the creation of the scheduled backups at that version time. Spanner initiates the creation of scheduled backups within the time window bounded by the version_time specified in `schedule_spec.cron_spec` and version_time + `creation_window`.",
 "format": "google-duration",
 "readOnly": true,
 "type": "string"
 },
 "text": {
-"description": "Required. Textual representation of the crontab. User can customize the backup frequency and the backup version time using the cron expression. The version time must be in UTC timezone. The backup will contain an externally consistent copy of the database at the version time. Full backups must be scheduled a minimum of 12 hours apart and incremental backups must be scheduled a minimum of 4 hours apart. Examples of valid cron specifications: * `0 2/12 * * *` : every 12 hours at (2, 14) hours past midnight in UTC. * `0 2,14 * * *` : every 12 hours at (2,14) hours past midnight in UTC. * `0 */4 * * *` : (incremental backups only) every 4 hours at (0, 4, 8, 12, 16, 20) hours past midnight in UTC. * `0 2 * * *` : once a day at 2 past midnight in UTC. * `0 2 * * 0` : once a week every Sunday at 2 past midnight in UTC. * `0 2 8 * *` : once a month on 8th day at 2 past midnight in UTC.",
+"description": "Required. Textual representation of the crontab. User can customize the backup frequency and the backup version time using the cron expression. The version time must be in UTC timezone. The backup will contain an externally consistent copy of the database at the version time. Full backups must be scheduled a minimum of 12 hours apart and incremental backups must be scheduled a minimum of 4 hours apart. Examples of valid cron specifications: * `0 2/12 * * *` : every 12 hours at (2, 14) hours past midnight in UTC. * `0 2,14 * * *` : every 12 hours at (2, 14) hours past midnight in UTC. * `0 */4 * * *` : (incremental backups only) every 4 hours at (0, 4, 8, 12, 16, 20) hours past midnight in UTC. * `0 2 * * *` : once a day at 2 past midnight in UTC. * `0 2 * * 0` : once a week every Sunday at 2 past midnight in UTC. * `0 2 8 * *` : once a month on 8th day at 2 past midnight in UTC.",
 "type": "string"
 },
 "timeZone": {
-"description": "Output only. The time zone of the times in `CrontabSpec.text`. Currently only UTC is supported.",
+"description": "Output only. The time zone of the times in `CrontabSpec.text`. Currently, only UTC is supported.",
 "readOnly": true,
 "type": "string"
 }
@@ -5034,12 +5053,12 @@
 "type": "string"
 },
 "nodeCount": {
-"description": "The number of nodes allocated to this instance. At most, one of either `node_count` or `processing_units` should be present in the message. Users can set the `node_count` field to specify the target number of nodes allocated to the instance. If autoscaling is enabled, `node_count` is treated as an `OUTPUT_ONLY` field and reflects the current number of nodes allocated to the instance. This might be zero in API responses for instances that are not yet in the `READY` state. For more information, see [Compute capacity, nodes, and processing units](https://cloud.google.com/spanner/docs/compute-capacity).",
+"description": "The number of nodes allocated to this instance. At most, one of either `node_count` or `processing_units` should be present in the message. Users can set the `node_count` field to specify the target number of nodes allocated to the instance. If autoscaling is enabled, `node_count` is treated as an `OUTPUT_ONLY` field and reflects the current number of nodes allocated to the instance. This might be zero in API responses for instances that are not yet in the `READY` state. If the instance has varying node count across replicas (achieved by setting `asymmetric_autoscaling_options` in the autoscaling configuration), the `node_count` set here is the maximum node count across all replicas. For more information, see [Compute capacity, nodes, and processing units](https://cloud.google.com/spanner/docs/compute-capacity).",
 "format": "int32",
 "type": "integer"
 },
 "processingUnits": {
-"description": "The number of processing units allocated to this instance. At most, one of either `processing_units` or `node_count` should be present in the message. Users can set the `processing_units` field to specify the target number of processing units allocated to the instance. If autoscaling is enabled, `processing_units` is treated as an `OUTPUT_ONLY` field and reflects the current number of processing units allocated to the instance. This might be zero in API responses for instances that are not yet in the `READY` state. For more information, see [Compute capacity, nodes and processing units](https://cloud.google.com/spanner/docs/compute-capacity).",
+"description": "The number of processing units allocated to this instance. At most, one of either `processing_units` or `node_count` should be present in the message. Users can set the `processing_units` field to specify the target number of processing units allocated to the instance. If autoscaling is enabled, `processing_units` is treated as an `OUTPUT_ONLY` field and reflects the current number of processing units allocated to the instance. This might be zero in API responses for instances that are not yet in the `READY` state. If the instance has varying processing units per replica (achieved by setting `asymmetric_autoscaling_options` in the autoscaling configuration), the `processing_units` set here is the maximum processing units across all replicas. For more information, see [Compute capacity, nodes and processing units](https://cloud.google.com/spanner/docs/compute-capacity).",
 "format": "int32",
 "type": "integer"
 },
@@ -6906,7 +6925,7 @@
 "type": "object"
 },
 "multiplexed": {
-"description": "Optional. If true, specifies a multiplexed session. Use a multiplexed session for multiple, concurrent read-only operations. Don't use them for read-write transactions, partitioned reads, or partitioned queries. Use CreateSession to create multiplexed sessions. Don't use BatchCreateSessions to create a multiplexed session. You can't delete or list multiplexed sessions.",
+"description": "Optional. If true, specifies a multiplexed session. Use a multiplexed session for multiple, concurrent read-only operations. Don't use them for read-write transactions, partitioned reads, or partitioned queries. Use `sessions.create` to create multiplexed sessions. Don't use BatchCreateSessions to create a multiplexed session. You can't delete or list multiplexed sessions.",
 "type": "boolean"
 },
 "name": {

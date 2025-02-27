@@ -379,6 +379,9 @@ Args:
       &quot;projectId&quot;: &quot;A String&quot;, # Optional. Project which has the topic given.
       &quot;topic&quot;: &quot;A String&quot;, # Optional. Topic to push events which couldn&#x27;t be processed.
     },
+    &quot;enrichmentConfig&quot;: { # Data enrichment configuration. # Optional. Data enrichment configuration.
+      &quot;appendAcl&quot;: True or False, # Optional. Append ACL to the event.
+    },
     &quot;enrichmentEnabled&quot;: True or False, # Optional. Enrichment Enabled.
     &quot;eventsListenerIngressEndpoint&quot;: &quot;A String&quot;, # Optional. Ingress endpoint of the event listener. This is used only when private connectivity is enabled.
     &quot;listenerAuthConfig&quot;: { # AuthConfig defines details of a authentication type. # Optional. Auth details for the event listener.
@@ -906,6 +909,9 @@ Returns:
     &quot;deadLetterConfig&quot;: { # Dead Letter configuration details provided by the user. # Optional. Dead letter configuration for eventing of a connection.
       &quot;projectId&quot;: &quot;A String&quot;, # Optional. Project which has the topic given.
       &quot;topic&quot;: &quot;A String&quot;, # Optional. Topic to push events which couldn&#x27;t be processed.
+    },
+    &quot;enrichmentConfig&quot;: { # Data enrichment configuration. # Optional. Data enrichment configuration.
+      &quot;appendAcl&quot;: True or False, # Optional. Append ACL to the event.
     },
     &quot;enrichmentEnabled&quot;: True or False, # Optional. Enrichment Enabled.
     &quot;eventsListenerIngressEndpoint&quot;: &quot;A String&quot;, # Optional. Ingress endpoint of the event listener. This is used only when private connectivity is enabled.
@@ -1454,6 +1460,9 @@ Returns:
           &quot;projectId&quot;: &quot;A String&quot;, # Optional. Project which has the topic given.
           &quot;topic&quot;: &quot;A String&quot;, # Optional. Topic to push events which couldn&#x27;t be processed.
         },
+        &quot;enrichmentConfig&quot;: { # Data enrichment configuration. # Optional. Data enrichment configuration.
+          &quot;appendAcl&quot;: True or False, # Optional. Append ACL to the event.
+        },
         &quot;enrichmentEnabled&quot;: True or False, # Optional. Enrichment Enabled.
         &quot;eventsListenerIngressEndpoint&quot;: &quot;A String&quot;, # Optional. Ingress endpoint of the event listener. This is used only when private connectivity is enabled.
         &quot;listenerAuthConfig&quot;: { # AuthConfig defines details of a authentication type. # Optional. Auth details for the event listener.
@@ -1955,6 +1964,9 @@ Args:
       &quot;projectId&quot;: &quot;A String&quot;, # Optional. Project which has the topic given.
       &quot;topic&quot;: &quot;A String&quot;, # Optional. Topic to push events which couldn&#x27;t be processed.
     },
+    &quot;enrichmentConfig&quot;: { # Data enrichment configuration. # Optional. Data enrichment configuration.
+      &quot;appendAcl&quot;: True or False, # Optional. Append ACL to the event.
+    },
     &quot;enrichmentEnabled&quot;: True or False, # Optional. Enrichment Enabled.
     &quot;eventsListenerIngressEndpoint&quot;: &quot;A String&quot;, # Optional. Ingress endpoint of the event listener. This is used only when private connectivity is enabled.
     &quot;listenerAuthConfig&quot;: { # AuthConfig defines details of a authentication type. # Optional. Auth details for the event listener.
@@ -2270,6 +2282,9 @@ Returns:
         &quot;description&quot;: &quot;A String&quot;, # Output only. Brief Description of action
         &quot;displayName&quot;: &quot;A String&quot;, # Output only. Display Name of action to be shown on client side
         &quot;inputJsonSchema&quot;: { # JsonSchema representation of schema metadata # Output only. JsonSchema representation of this action&#x27;s input metadata
+          &quot;additionalDetails&quot;: { # Additional details apart from standard json schema fields, this gives flexibility to store metadata about the schema
+            &quot;a_key&quot;: &quot;&quot;, # Properties of the object.
+          },
           &quot;default&quot;: &quot;&quot;, # The default value of the field or object described by this schema.
           &quot;description&quot;: &quot;A String&quot;, # A description of this schema.
           &quot;enum&quot;: [ # Possible values for an enumeration. This works in conjunction with `type` to represent types with a fixed set of legal values
@@ -2294,6 +2309,9 @@ Returns:
             &quot;defaultValue&quot;: &quot;&quot;, # The following field specifies the default value of the Parameter provided by the external system if a value is not provided.
             &quot;description&quot;: &quot;A String&quot;, # A brief description of the Parameter.
             &quot;jsonSchema&quot;: { # JsonSchema representation of schema metadata # JsonSchema representation of this action&#x27;s parameter
+              &quot;additionalDetails&quot;: { # Additional details apart from standard json schema fields, this gives flexibility to store metadata about the schema
+                &quot;a_key&quot;: &quot;&quot;, # Properties of the object.
+              },
               &quot;default&quot;: &quot;&quot;, # The default value of the field or object described by this schema.
               &quot;description&quot;: &quot;A String&quot;, # A description of this schema.
               &quot;enum&quot;: [ # Possible values for an enumeration. This works in conjunction with `type` to represent types with a fixed set of legal values
@@ -2318,6 +2336,9 @@ Returns:
         ],
         &quot;inputSchemaAsString&quot;: &quot;A String&quot;, # Output only. Input schema as string.
         &quot;resultJsonSchema&quot;: { # JsonSchema representation of schema metadata # Output only. JsonSchema representation of this action&#x27;s result metadata
+          &quot;additionalDetails&quot;: { # Additional details apart from standard json schema fields, this gives flexibility to store metadata about the schema
+            &quot;a_key&quot;: &quot;&quot;, # Properties of the object.
+          },
           &quot;default&quot;: &quot;&quot;, # The default value of the field or object described by this schema.
           &quot;description&quot;: &quot;A String&quot;, # A description of this schema.
           &quot;enum&quot;: [ # Possible values for an enumeration. This works in conjunction with `type` to represent types with a fixed set of legal values
@@ -2343,6 +2364,9 @@ Returns:
             &quot;description&quot;: &quot;A String&quot;, # A brief description of the field.
             &quot;field&quot;: &quot;A String&quot;, # Name of the result field.
             &quot;jsonSchema&quot;: { # JsonSchema representation of schema metadata # JsonSchema representation of this action&#x27;s result
+              &quot;additionalDetails&quot;: { # Additional details apart from standard json schema fields, this gives flexibility to store metadata about the schema
+                &quot;a_key&quot;: &quot;&quot;, # Properties of the object.
+              },
               &quot;default&quot;: &quot;&quot;, # The default value of the field or object described by this schema.
               &quot;description&quot;: &quot;A String&quot;, # A description of this schema.
               &quot;enum&quot;: [ # Possible values for an enumeration. This works in conjunction with `type` to represent types with a fixed set of legal values
@@ -2591,6 +2615,9 @@ Returns:
             &quot;projectId&quot;: &quot;A String&quot;, # Optional. Project which has the topic given.
             &quot;topic&quot;: &quot;A String&quot;, # Optional. Topic to push events which couldn&#x27;t be processed.
           },
+          &quot;enrichmentConfig&quot;: { # Data enrichment configuration. # Optional. Data enrichment configuration.
+            &quot;appendAcl&quot;: True or False, # Optional. Append ACL to the event.
+          },
           &quot;enrichmentEnabled&quot;: True or False, # Optional. Enrichment Enabled.
           &quot;eventsListenerIngressEndpoint&quot;: &quot;A String&quot;, # Optional. Ingress endpoint of the event listener. This is used only when private connectivity is enabled.
           &quot;listenerAuthConfig&quot;: { # AuthConfig defines details of a authentication type. # Optional. Auth details for the event listener.
@@ -2821,6 +2848,9 @@ Returns:
             &quot;description&quot;: &quot;A String&quot;, # A brief description of the Field.
             &quot;field&quot;: &quot;A String&quot;, # Name of the Field.
             &quot;jsonSchema&quot;: { # JsonSchema representation of schema metadata # JsonSchema representation of this entity&#x27;s schema
+              &quot;additionalDetails&quot;: { # Additional details apart from standard json schema fields, this gives flexibility to store metadata about the schema
+                &quot;a_key&quot;: &quot;&quot;, # Properties of the object.
+              },
               &quot;default&quot;: &quot;&quot;, # The default value of the field or object described by this schema.
               &quot;description&quot;: &quot;A String&quot;, # A description of this schema.
               &quot;enum&quot;: [ # Possible values for an enumeration. This works in conjunction with `type` to represent types with a fixed set of legal values
@@ -2845,6 +2875,9 @@ Returns:
           },
         ],
         &quot;jsonSchema&quot;: { # JsonSchema representation of schema metadata # Output only. JsonSchema representation of this entity&#x27;s metadata
+          &quot;additionalDetails&quot;: { # Additional details apart from standard json schema fields, this gives flexibility to store metadata about the schema
+            &quot;a_key&quot;: &quot;&quot;, # Properties of the object.
+          },
           &quot;default&quot;: &quot;&quot;, # The default value of the field or object described by this schema.
           &quot;description&quot;: &quot;A String&quot;, # A description of this schema.
           &quot;enum&quot;: [ # Possible values for an enumeration. This works in conjunction with `type` to represent types with a fixed set of legal values

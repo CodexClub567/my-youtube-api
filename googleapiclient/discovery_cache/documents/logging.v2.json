@@ -8922,7 +8922,7 @@
 }
 }
 },
-"revision": "20250124",
+"revision": "20250207",
 "rootUrl": "https://logging.googleapis.com/",
 "schemas": {
 "BigQueryDataset": {
